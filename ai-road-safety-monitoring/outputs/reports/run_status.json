@@ -1,0 +1,9 @@
+{
+  "check": "ok",
+  "clean": "ok",
+  "eda": "ok",
+  "model": "ok",
+  "report": "ok",
+  "images": "skipped: No images found. Put two related images in data/raw/match_pair/ and labelled images in data/raw/images/<class_name>/.",
+  "match": "skipped: No images found. Put two related images in data/raw/match_pair/ and labelled images in data/raw/images/<class_name>/."
+}

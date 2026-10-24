@@ -1,0 +1,26 @@
+{
+  "findings": [
+    "The cleaned dataset has 101,525 accidents; 26.2% are Fatal/Serious and 73.8% Slight, so the classes are imbalanced and accuracy alone would be misleading.",
+    "Number of vehicles is right-skewed: median 2, 95th percentile 3, maximum 17. These large crashes are real events, so they were kept and a log transform is used for modelling.",
+    "The share of Fatal/Serious accidents is highest at hour 4 (33.1%, n=634) and lowest at hour 8 (21.4%); the busiest hour for accidents is 17:00.",
+    "By speed limit, the severe share ranges from 22.4% (value 20.0) to 36.4% (value 60.0) among groups with at least 203 accidents.",
+    "By light-condition code, the severe share ranges from 23.4% (value 7) to 36.3% (value 6) among groups with at least 203 accidents.",
+    "By urban/rural code, the severe share ranges from 23.9% (value 1) to 30.9% (value 2) among groups with at least 203 accidents.",
+    "Weekend accidents are 28.5% severe versus 25.5% on weekdays.",
+    "The strongest linear correlation with the severe flag is latitude (r=+0.09); all correlations are weak-to-moderate and, being observational, do not show causation.",
+    "After cleaning, 'junction_control' has the most remaining missing values (43.8%); these are imputed inside the modelling pipeline (training data only)."
+  ],
+  "figures": {
+    "target_distribution": "eda_target_distribution.png",
+    "histograms": "eda_histograms.png",
+    "boxplots": "eda_boxplots.png",
+    "feature_vs_target": "eda_feature_vs_target.png",
+    "hourly": "eda_hourly_trend.png",
+    "monthly": "eda_monthly_trend.png",
+    "correlation": "eda_correlation_heatmap.png",
+    "map_scatter": "eda_location_scatter.png",
+    "multivariate": "eda_multivariate_heatmap.png",
+    "missing": "eda_missing_values.png"
+  },
+  "min_group_size": 203
+}

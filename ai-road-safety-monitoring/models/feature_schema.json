@@ -1,0 +1,198 @@
+{
+  "feature_order": [
+    "speed_limit",
+    "latitude",
+    "longitude",
+    "hour_sin",
+    "hour_cos",
+    "month",
+    "number_of_vehicles",
+    "is_weekend",
+    "is_rush_hour",
+    "is_night",
+    "day_of_week",
+    "road_type",
+    "junction_detail",
+    "junction_control",
+    "first_road_class",
+    "second_road_class",
+    "light_conditions",
+    "weather_conditions",
+    "road_surface_conditions",
+    "carriageway_hazards",
+    "urban_or_rural_area"
+  ],
+  "groups": {
+    "numeric": [
+      "speed_limit",
+      "latitude",
+      "longitude",
+      "hour_sin",
+      "hour_cos",
+      "month"
+    ],
+    "skewed_numeric": [
+      "number_of_vehicles"
+    ],
+    "binary": [
+      "is_weekend",
+      "is_rush_hour",
+      "is_night"
+    ],
+    "categorical": [
+      "day_of_week",
+      "road_type",
+      "junction_detail",
+      "junction_control",
+      "first_road_class",
+      "second_road_class",
+      "light_conditions",
+      "weather_conditions",
+      "road_surface_conditions",
+      "carriageway_hazards",
+      "urban_or_rural_area"
+    ],
+    "ordinal": [
+      "speed_limit"
+    ],
+    "datetime_source": []
+  },
+  "numeric": {
+    "speed_limit": {
+      "min": 20.0,
+      "max": 70.0,
+      "median": 30.0
+    },
+    "latitude": {
+      "min": 49.91303,
+      "max": 60.20721,
+      "median": 51.88573
+    },
+    "longitude": {
+      "min": -7.39244,
+      "max": 1.75497,
+      "median": -1.13413
+    },
+    "hour_sin": {
+      "min": -1.0,
+      "max": 1.0,
+      "median": -0.4999999999999997
+    },
+    "hour_cos": {
+      "min": -1.0,
+      "max": 1.0,
+      "median": -0.4999999999999998
+    },
+    "month": {
+      "min": 1.0,
+      "max": 12.0,
+      "median": 7.0
+    },
+    "number_of_vehicles": {
+      "min": 1.0,
+      "max": 17.0,
+      "median": 2.0
+    }
+  },
+  "categorical": {
+    "day_of_week": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "road_type": [
+      "1",
+      "2",
+      "3",
+      "6",
+      "7",
+      "9"
+    ],
+    "junction_detail": [
+      "0",
+      "13",
+      "16",
+      "17",
+      "18",
+      "19",
+      "99"
+    ],
+    "junction_control": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "9"
+    ],
+    "first_road_class": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "second_road_class": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "9"
+    ],
+    "light_conditions": [
+      "1",
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "weather_conditions": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    "road_surface_conditions": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "9"
+    ],
+    "carriageway_hazards": [
+      "0",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "99"
+    ],
+    "urban_or_rural_area": [
+      "1",
+      "2",
+      "3"
+    ]
+  },
+  "excluded": {},
+  "target": "severe"
+}

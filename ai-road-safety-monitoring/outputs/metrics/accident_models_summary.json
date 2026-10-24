@@ -1,0 +1,135 @@
+{
+  "target": "severe (1 = fatal or serious, 0 = slight)",
+  "rows_used": 60000,
+  "train_rows": 48000,
+  "test_rows": 12000,
+  "test_severe_share": 0.2624166666666667,
+  "majority_class_baseline_accuracy": 0.7375833333333333,
+  "primary_metric": "F1-score of the Fatal/Serious class",
+  "best_model": "Random Forest",
+  "justification": "'Random Forest' was selected because it has the highest F1-score for the Fatal/Serious class on held-out data. Severe accidents are the minority class, so accuracy is misleading (always predicting 'Slight' would already score 0.738). F1 balances precision (avoiding false alarms) and recall (not missing severe cases). If missing a severe case were considered worse than a false alarm, recall should be prioritised instead.",
+  "features_used": [
+    "speed_limit",
+    "latitude",
+    "longitude",
+    "hour_sin",
+    "hour_cos",
+    "month",
+    "number_of_vehicles",
+    "is_weekend",
+    "is_rush_hour",
+    "is_night",
+    "day_of_week",
+    "road_type",
+    "junction_detail",
+    "junction_control",
+    "first_road_class",
+    "second_road_class",
+    "light_conditions",
+    "weather_conditions",
+    "road_surface_conditions",
+    "carriageway_hazards",
+    "urban_or_rural_area"
+  ],
+  "excluded_features": {},
+  "models": {
+    "Logistic Regression": {
+      "confusion_matrix": [
+        [
+          5069,
+          3782
+        ],
+        [
+          1260,
+          1889
+        ]
+      ],
+      "test": {
+        "accuracy": 0.5798333333333333,
+        "precision": 0.3330982190089931,
+        "recall": 0.599872975547793,
+        "f1": 0.4283446712018141
+      },
+      "train": {
+        "accuracy": 0.5821,
+        "precision": 0.3424803233354605,
+        "recall": 0.5967383246849518,
+        "f1": 0.43519394512771997
+      }
+    },
+    "K-Nearest Neighbors": {
+      "confusion_matrix": [
+        [
+          8455,
+          396
+        ],
+        [
+          2883,
+          266
+        ]
+      ],
+      "test": {
+        "accuracy": 0.72675,
+        "precision": 0.40181268882175225,
+        "recall": 0.08447126071768815,
+        "f1": 0.13959590658619786
+      },
+      "train": {
+        "accuracy": 0.7411,
+        "precision": 0.5819548872180451,
+        "recall": 0.14343958487768718,
+        "f1": 0.23015165031222123
+      }
+    },
+    "Decision Tree": {
+      "confusion_matrix": [
+        [
+          4832,
+          4019
+        ],
+        [
+          1189,
+          1960
+        ]
+      ],
+      "test": {
+        "accuracy": 0.566,
+        "precision": 0.3278140157216926,
+        "recall": 0.6224198158145443,
+        "f1": 0.4294478527607362
+      },
+      "train": {
+        "accuracy": 0.5774,
+        "precision": 0.3482320222487088,
+        "recall": 0.6497405485544848,
+        "f1": 0.45344024831867563
+      }
+    },
+    "Random Forest": {
+      "confusion_matrix": [
+        [
+          5571,
+          3280
+        ],
+        [
+          1388,
+          1761
+        ]
+      ],
+      "test": {
+        "accuracy": 0.611,
+        "precision": 0.349335449315612,
+        "recall": 0.559225150841537,
+        "f1": 0.43003663003663006
+      },
+      "train": {
+        "accuracy": 0.6475,
+        "precision": 0.40217648450437665,
+        "recall": 0.6300963676797627,
+        "f1": 0.49097472924187724
+      }
+    }
+  },
+  "train_eval_rows": 10000,
+  "notes": "Preprocessing (imputation, scaling, encoding) is fitted inside each Pipeline on the training split only."
+}

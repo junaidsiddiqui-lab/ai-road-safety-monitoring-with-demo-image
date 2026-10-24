@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+kaggle.json
+*.zip
+# Raw datasets are not redistributed - download them yourself (see data/README.md)
+data/raw/accidents/*
+data/raw/images/*
+data/raw/match_pair/*
+!data/raw/**/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+models/*.joblib

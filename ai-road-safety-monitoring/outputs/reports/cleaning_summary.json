@@ -1,0 +1,267 @@
+{
+  "raw": {
+    "rows": 101525,
+    "columns": 44,
+    "dtypes": {
+      "accident_index": "object",
+      "accident_year": "int64",
+      "accident_reference": "object",
+      "location_easting_osgr": "float64",
+      "location_northing_osgr": "float64",
+      "longitude": "float64",
+      "latitude": "float64",
+      "police_force": "int64",
+      "accident_severity": "int64",
+      "number_of_vehicles": "int64",
+      "number_of_casualties": "int64",
+      "date": "object",
+      "day_of_week": "int64",
+      "time": "object",
+      "local_authority_district": "int64",
+      "local_authority_ons_district": "object",
+      "local_authority_highway": "object",
+      "local_authority_highway_current": "object",
+      "first_road_class": "int64",
+      "first_road_number": "int64",
+      "road_type": "int64",
+      "speed_limit": "int64",
+      "junction_detail_historic": "int64",
+      "junction_detail": "int64",
+      "junction_control": "int64",
+      "second_road_class": "int64",
+      "second_road_number": "int64",
+      "pedestrian_crossing_human_control_historic": "int64",
+      "pedestrian_crossing_physical_facilities_historic": "int64",
+      "pedestrian_crossing": "int64",
+      "light_conditions": "int64",
+      "weather_conditions": "int64",
+      "road_surface_conditions": "int64",
+      "special_conditions_at_site": "int64",
+      "carriageway_hazards_historic": "int64",
+      "carriageway_hazards": "int64",
+      "urban_or_rural_area": "int64",
+      "did_police_officer_attend_scene_of_accident": "int64",
+      "trunk_road_flag": "int64",
+      "lsoa_of_accident_location": "object",
+      "enhanced_severity_collision": "int64",
+      "collision_injury_based": "int64",
+      "collision_adjusted_severity_serious": "float64",
+      "collision_adjusted_severity_slight": "float64"
+    },
+    "missing_share": {
+      "location_easting_osgr": 0.0,
+      "location_northing_osgr": 0.0,
+      "longitude": 0.0,
+      "latitude": 0.0
+    },
+    "duplicate_rows": 0
+  },
+  "steps": [
+    {
+      "problem": "Whitespace and text tokens such as 'Data missing or out of range' hide real missing values",
+      "method": "Stripped text and replaced tokens with NaN",
+      "why": "Missing values must be recognised before they can be analysed"
+    },
+    {
+      "problem": "Coded columns use -1 for 'data missing or out of range'",
+      "method": "Replaced -1 with NaN in coded columns",
+      "why": "-1 is not a real category; treating it as a number would distort statistics",
+      "values_replaced": 253852
+    },
+    {
+      "problem": "Duplicate records inflate counts and can leak between train/test sets",
+      "method": "Dropped exact duplicate rows, then repeated accident_index values (keep first)",
+      "why": "accident_index uniquely identifies an accident record",
+      "full_duplicates": 0,
+      "duplicate_index": 0
+    },
+    {
+      "problem": "Dates, times and counts are stored as text",
+      "method": "Parsed dates (day-first) and HH:MM times, coerced numbers",
+      "why": "Needed for time features; unparseable values become NaN instead of crashing",
+      "unparsable_dates": 0,
+      "unparsable_times": 0
+    },
+    {
+      "problem": "Coordinates outside the valid range",
+      "method": "Set to NaN",
+      "why": "Impossible values are errors, not outliers",
+      "coordinates_invalid": 0
+    },
+    {
+      "problem": "Extreme counts (many vehicles/casualties) found with the 1.5xIQR rule",
+      "method": "Kept the rows; reduced skew with a log1p transform inside the modelling pipeline",
+      "why": "Large multi-vehicle crashes are real events, and they are the rare serious ones we care about",
+      "outliers": {
+        "number_of_vehicles": {
+          "lower": -0.5,
+          "upper": 3.5,
+          "count": 1939,
+          "max": 17.0
+        },
+        "number_of_casualties": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "count": 18208,
+          "max": 142.0
+        },
+        "speed_limit": {
+          "lower": 15.0,
+          "upper": 55.0,
+          "count": 18309,
+          "max": 70.0
+        }
+      }
+    },
+    {
+      "problem": "Raw date/time cannot be used directly by models",
+      "method": "Created hour, month, weekday, weekend/rush-hour/night flags and cyclic hour_sin/hour_cos",
+      "why": "Hour 23 and hour 0 are neighbours; the cyclic encoding preserves that"
+    },
+    {
+      "problem": "Severity has three levels (1 fatal, 2 serious, 3 slight) and fatal is very rare",
+      "method": "Binary target severe = fatal or serious",
+      "why": "Keeps enough positive cases to learn from; rows without severity are unusable for supervised learning",
+      "rows_dropped_no_target": 0
+    },
+    {
+      "problem": "Columns with more than 50% missing values carry too little information",
+      "method": "Dropped them (rows kept)",
+      "why": "Rows with some missing fields are retained; remaining gaps are imputed later inside the pipeline",
+      "dropped_columns": [
+        "local_authority_district",
+        "special_conditions_at_site"
+      ]
+    }
+  ],
+  "clean": {
+    "rows": 101525,
+    "columns": 51,
+    "dtypes": {
+      "accident_index": "object",
+      "accident_year": "int64",
+      "accident_reference": "object",
+      "location_easting_osgr": "float64",
+      "location_northing_osgr": "float64",
+      "longitude": "float64",
+      "latitude": "float64",
+      "police_force": "float64",
+      "accident_severity": "float64",
+      "number_of_vehicles": "int64",
+      "number_of_casualties": "int64",
+      "date": "object",
+      "day_of_week": "object",
+      "time": "object",
+      "local_authority_ons_district": "object",
+      "local_authority_highway": "object",
+      "local_authority_highway_current": "object",
+      "first_road_class": "object",
+      "first_road_number": "int64",
+      "road_type": "object",
+      "speed_limit": "float64",
+      "junction_detail_historic": "int64",
+      "junction_detail": "object",
+      "junction_control": "object",
+      "second_road_class": "object",
+      "second_road_number": "int64",
+      "pedestrian_crossing_human_control_historic": "int64",
+      "pedestrian_crossing_physical_facilities_historic": "int64",
+      "pedestrian_crossing": "int64",
+      "light_conditions": "object",
+      "weather_conditions": "object",
+      "road_surface_conditions": "object",
+      "carriageway_hazards_historic": "int64",
+      "carriageway_hazards": "object",
+      "urban_or_rural_area": "object",
+      "did_police_officer_attend_scene_of_accident": "float64",
+      "trunk_road_flag": "float64",
+      "lsoa_of_accident_location": "object",
+      "enhanced_severity_collision": "int64",
+      "collision_injury_based": "int64",
+      "collision_adjusted_severity_serious": "float64",
+      "collision_adjusted_severity_slight": "float64",
+      "hour": "int32",
+      "month": "int32",
+      "year": "int32",
+      "is_weekend": "float64",
+      "is_rush_hour": "float64",
+      "is_night": "float64",
+      "hour_sin": "float64",
+      "hour_cos": "float64",
+      "severe": "int64"
+    },
+    "missing_share": {
+      "location_easting_osgr": 0.0,
+      "location_northing_osgr": 0.0,
+      "longitude": 0.0,
+      "latitude": 0.0,
+      "first_road_class": 0.0001,
+      "junction_detail": 0.066,
+      "junction_control": 0.4382,
+      "second_road_class": 0.0017,
+      "light_conditions": 0.0002,
+      "road_surface_conditions": 0.0062,
+      "carriageway_hazards": 0.0527,
+      "trunk_road_flag": 0.07
+    },
+    "duplicate_rows": 0
+  },
+  "target_counts": {
+    "0": 74881,
+    "1": 26644
+  },
+  "severe_share": 0.2624,
+  "feature_types": {
+    "numeric": [
+      "speed_limit",
+      "latitude",
+      "longitude",
+      "hour_sin",
+      "hour_cos",
+      "month"
+    ],
+    "skewed_numeric": [
+      "number_of_vehicles"
+    ],
+    "binary": [
+      "is_weekend",
+      "is_rush_hour",
+      "is_night"
+    ],
+    "categorical": [
+      "day_of_week",
+      "road_type",
+      "junction_detail",
+      "junction_control",
+      "first_road_class",
+      "second_road_class",
+      "light_conditions",
+      "weather_conditions",
+      "road_surface_conditions",
+      "carriageway_hazards",
+      "urban_or_rural_area"
+    ],
+    "ordinal": [
+      "speed_limit"
+    ],
+    "datetime_source": [
+      "date",
+      "time"
+    ],
+    "excluded": {
+      "number_of_casualties": "outcome known only after the accident (target leakage)",
+      "did_police_officer_attend_scene_of_accident": "post-event information (leakage)",
+      "accident_severity": "the raw target the label is built from",
+      "accident_index": "identifier",
+      "accident_reference": "identifier",
+      "lsoa_of_accident_location": "very high-cardinality area code",
+      "local_authority_ons_district": "very high-cardinality area code",
+      "local_authority_highway": "very high-cardinality area code",
+      "police_force": "high-cardinality administrative code",
+      "location_easting_osgr": "replaced by latitude/longitude",
+      "location_northing_osgr": "replaced by latitude/longitude",
+      "first_road_number": "high-cardinality identifier",
+      "second_road_number": "high-cardinality identifier"
+    }
+  }
+}
